@@ -5,19 +5,19 @@ nested_list = [['a', 'b', 'c'],['d', 'e', 'f', 'h', False],[1, 2, None]]
 class FlatIterator:
     def __init__(self, nested_list):
         self.nested_list = nested_list
-        self.list_len = len(nested_list)
-        self.value = 0
+        self.value = -1
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if self.value >= self.list_len:
+        self.value += 1
+        res_list = [item for items in self.nested_list for item in items]
+        if self.value >= len(res_list):
             raise StopIteration
         else:
-            for item in self.nested_list[self.value]:
-                yield item
-            self.value += 1
+            result = res_list[self.value]
+            return result
 
 for item in FlatIterator(nested_list):
     print(item)
